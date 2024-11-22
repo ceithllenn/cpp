@@ -1,20 +1,7 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Contact.hpp                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: elvallet <elvallet@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/28 08:51:31 by elvallet          #+#    #+#             */
-/*   Updated: 2024/08/28 09:15:00 by elvallet         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef CONTACT_HPP
-#define CONTACT_HPP
-
-#include <iostream>
-#include <string>
+# define CONTACT_HPP
+# include <string>
+# include <iostream>
 
 class Contact
 {
@@ -24,11 +11,12 @@ private:
 	std::string	nickname;
 	std::string	phone_number;
 	std::string	secret;
-	
 public:
 	Contact();
-	~Contact();
-	
+	void set_contact(const std::string &fname, const std::string &lname, const std::string &nick, const std::string &number, const std::string &s);
+	std::string	in_column(const std::string &str) const;
+	void display_all(int index) const;
+	void display_contact() const;
 };
 
 #endif
