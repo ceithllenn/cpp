@@ -52,7 +52,9 @@ void Harl::error(void)
 	std::cout << std::endl;
 }
 
-
+/*
+ * Selects the right Harl complain message
+ */
 void Harl::complain(std::string level)
 {
 	void (Harl::*ptr[4])(void) 	= {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
