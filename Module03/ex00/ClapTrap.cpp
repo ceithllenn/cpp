@@ -27,9 +27,9 @@ ClapTrap::ClapTrap(): name("ClapTrap"), hit_point(10), energy_point(10), attack_
 /*
  * ClapTrap name constructor
  */
-ClapTrap::ClapTrap(std::string name): name(name), hit_point(10), energy_point(10), attack_damage(0)
+ClapTrap::ClapTrap(std::string s): name(s), hit_point(10), energy_point(10), attack_damage(0)
 {
-	std::cout << COL << "ClapTrap " << name << " was created" << RESET << std::endl;
+	std::cout << COL << "ClapTrap " << s << " was created" << RESET << std::endl;
 }
 
 /*

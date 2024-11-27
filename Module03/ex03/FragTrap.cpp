@@ -30,12 +30,12 @@ FragTrap::FragTrap(): ClapTrap("FragTrap")
 /*
  * FragTrap name constructor
  */
-FragTrap::FragTrap(std::string name): ClapTrap(name)
+FragTrap::FragTrap(std::string s): ClapTrap(s)
 {
 	this->hit_point = 100;
 	this->energy_point = 100;
 	this->attack_damage = 30;
-	std::cout << GREEN << "FragTrap " << name << "was created" << RESET << std::endl;
+	std::cout << GREEN << "FragTrap " << s << "was created" << RESET << std::endl;
 }
 
 /*

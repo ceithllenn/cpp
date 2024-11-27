@@ -31,13 +31,13 @@ DiamondTrap::DiamondTrap(): ClapTrap("DiamondTrap_clap_trap")
 /*
  * DiamondTrap name constructor
  */
-DiamondTrap::DiamondTrap(std::string name): ClapTrap(name + "_clap_trap")
+DiamondTrap::DiamondTrap(std::string s): ClapTrap(s + "_clap_trap")
 {
-	this->name = name;
+	this->name = s;
 	this->hit_point = FragTrap::hit_point;
 	this->energy_point = ScavTrap::energy_point;
 	this->attack_damage = FragTrap::attack_damage;
-	std::cout << YELLOW << "DiamondTrap " << name << " was created" << RESET << std::endl;
+	std::cout << YELLOW << "DiamondTrap " << s << " was created" << RESET << std::endl;
 }
 
 /*

@@ -31,13 +31,13 @@ ScavTrap::ScavTrap(): ClapTrap("ScavTrap")
 /*
  * ScavTrap name constructor
  */
-ScavTrap::ScavTrap(std::string name): ClapTrap(name)
+ScavTrap::ScavTrap(std::string s): ClapTrap(s)
 {
 	this->hit_point = 100;
 	this->energy_point = 50;
 	this->attack_damage = 20;
 	this->gate_keeper = false;
-	std::cout << BLUE << "ScavTrap " << name << " was created" << RESET << std::endl;
+	std::cout << BLUE << "ScavTrap " << s << " was created" << RESET << std::endl;
 }
 
 /*
