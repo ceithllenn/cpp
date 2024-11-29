@@ -1,10 +1,11 @@
-#ifndef AMATERIA_HPP
-# define AMATERIA_HPP
+#pragma once
 
-# include <string>
-# include <iostream>
-# include "colors.hpp"
-# include "ICharacter.hpp"
+#include <string>
+#include <iostream>
+#include "colors.hpp"
+#include "ICharacter.hpp"
+
+class ICharacter;
 
 class AMateria
 {
@@ -22,5 +23,3 @@ class AMateria
 			virtual AMateria *clone() const = 0;
 			virtual void use(ICharacter& target);
 };
-
-#endif

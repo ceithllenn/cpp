@@ -1,15 +1,15 @@
-#include "Ice.hpp"
+#include "Cure.hpp"
 
 /**************************************************************************/
 /*									DESTRUCTOR	   						  */
 /**************************************************************************/
 
 /*
- * Ice destructor
+ * Cure destructor
  */
-Ice::~Ice()
+Cure::~Cure()
 {
-	std::cout << BLUE << "Ice destructor called" << RST << std::endl;
+	std::cout << GRNN << "Cure destructor called" << RST << std::endl;
 }
 
 /**************************************************************************/
@@ -17,28 +17,28 @@ Ice::~Ice()
 /**************************************************************************/
 
 /*
- * Ice default constructor
+ * Cure default constructor
  */
-Ice::Ice(): AMateria("ice")
+Cure::Cure(): AMateria("cure")
 {
-	std::cout << BLUE << "Ice default constructor called" << RST << std::endl;
+	std::cout << GRNN << "Cure default constructor called" << RST << std::endl;
 }
 
 /*
- * Ice copy constructor
+ * Cure copy constructor
  */
-Ice::Ice(Ice const &copy): AMateria()
+Cure::Cure(Cure const &copy): AMateria()
 {
-	std::cout << BLUE << "Ice copy constructor called" << RST << std::endl;
+	std::cout << GRNN << "Cure copy constructor called" << RST << std::endl;
 	*this = copy;
 }
 
 /*
- * Ice assignation operator overload
+ * Cure assignation operator overload
  */
-Ice& Ice::operator=(Ice const &src)
+Cure& Cure::operator=(Cure const &src)
 {
-	std::cout << BLUE << "Ice addignation operator called" << RST << std::endl;
+	std::cout << GRNN << "Cure assignation operator called" << RST << std::endl;
 	this->type = src.type;
 	return (*this);
 }
@@ -50,9 +50,9 @@ Ice& Ice::operator=(Ice const &src)
 /*
  * Duplicates materia
  */
-Ice* Ice::clone(void) const
+Cure* Cure::clone(void) const
 {
-	return (new Ice());
+	return (new Cure());
 }
 
 /*
@@ -60,7 +60,7 @@ Ice* Ice::clone(void) const
  *
  * @param target target of the spell
  */
-void Ice::use(ICharacter &target)
+void Cure::use(ICharacter &target)
 {
-	std::cout << "* shoots an ice bolt at " << target.getName() << " *" << std::endl;
+	std::cout << "* heals " << target.getName() << "'s wounds *" << std::endl;
 }

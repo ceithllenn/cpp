@@ -63,12 +63,12 @@ std::string const &AMateria::getType() const
 /*							PUBLIC METHODS					   			  */
 /**************************************************************************/
 
-AMateria *AMateria::clone() const
+/*
+ * Uses materia
+ *
+ * @param target target of the spell
+ */
+void AMateria::use(ICharacter& target)
 {
-//	AMateria* m = new AMateria(this);
+	std::cout << IVRY << "Default attack (no type) on " << target.getName() << RST << std::endl;
 }
-
-// void AMateria::use(ICharacter& target)
-// {
-
-// }

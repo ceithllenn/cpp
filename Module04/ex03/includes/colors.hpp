@@ -1,5 +1,4 @@
-#ifndef COLORS_HPP
-# define COLORS_HPP
+#pragma once
 
 # define REDD "\033[0;38;2;255;0;0m"       // Rouge
 # define ORNG "\033[0;38;2;205;105;0m"     // Orange
@@ -33,5 +32,3 @@
 # define CLRALL "\033[2J\033[3J\033[H"     // Clear terminal (supprime historique)
 # define CLR "\033c"                       // Clear terminal (garde historique)
 # define CLRL "\033[2K"                    // Clear ligne terminal
-
-#endif

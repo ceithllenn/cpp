@@ -5,7 +5,12 @@ FLAGS = -Wall -Wextra -Werror -std=c++98 -MMD -g3
 INCLUDES = -I includes/ 
 
 SRCS_DIR = src/
-FUNC =	main.cpp		\
+FUNC =	AMateria.cpp	\
+		Character.cpp	\
+		Cure.cpp		\
+		Ice.cpp			\
+		main.cpp		\
+		MateriaSource.cpp
 
 
 

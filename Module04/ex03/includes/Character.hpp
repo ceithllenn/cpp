@@ -1,7 +1,6 @@
-#ifndef CHARACTER_HPP
-# define CHARACTER_HPP
+#pragma once
 
-# include "ICharacter.hpp"
+#include "ICharacter.hpp"
 
 class Character: virtual public ICharacter
 {
@@ -18,9 +17,8 @@ class Character: virtual public ICharacter
 			~Character();
 
 			std::string const &getName() const;
-			void equip(AMateria *m) const;
+			AMateria* getMateria(int idx) const;
+			void equip(AMateria *m);
 			void unequip(int idx);
 			void use(int idx, ICharacter& target);
 };
-
-#endif
