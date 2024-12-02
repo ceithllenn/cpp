@@ -1,15 +1,15 @@
-#include "Form.hpp"
+#include "AForm.hpp"
 
 /**************************************************************************/
 /*									DESTRUCTOR	   						  */
 /**************************************************************************/
 
 /*
- * Form destructor
+ * AForm destructor
  */
-Form::~Form()
+AForm::~AForm()
 {
-	std::cout << PINK << "Form destructor called" << RST << std::endl;
+	std::cout << PINK << "AForm destructor called" << RST << std::endl;
 }
 
 /**************************************************************************/
@@ -17,68 +17,68 @@ Form::~Form()
 /**************************************************************************/
 
 /*
- * Form default constructor
+ * AForm default constructor
  */
-Form::Form(): name("default"), isSigned(false), toSign(150), toEx(150)
+AForm::AForm(): name("default"), isSigned(false), toSign(150), toEx(150)
 {
-	std::cout << PINK << "Form constructor called for " << this->getName()
+	std::cout << PINK << "AForm constructor called for " << this->getName()
 			<< " with sign grade " << this->getToSign() << " and exec grade of "
 			<< this->getToEx() << RST << std::endl;
 }
 
 /*
- * Form name constructor
+ * AForm name constructor
  */
-Form::Form(std::string s): name(s), isSigned(false), toSign(150), toEx(150)
+AForm::AForm(std::string s): name(s), isSigned(false), toSign(150), toEx(150)
 {
-	std::cout << PINK << "Form constructor called for " << this->getName()
-			<< " with sign grade " << this->getToSign() << " and exec grade of "
+	std::cout << PINK << "AForm constructor called for " << this->getName()
+			<< " with sign grade " << this->getToSign() << " and exex grade of "
 			<< this->getToEx() << RST << std::endl;
 }
 
 /*
- * Form grades constructor
+ * AForm grades constructor
  */
-Form::Form(int nToSign, int nToEx): name("default"), isSigned(false), toSign(nToSign), toEx(nToEx)
+AForm::AForm(int nToSign, int nToEx): name("default"), isSigned(false), toSign(nToSign), toEx(nToEx)
 {
-	std::cout << PINK << "Form constructor called for " << this->getName()
-			<< " with sign grade " << this->getToSign() << " and exec grade of "
-			<< this->getToEx() << RST << std::endl;
-	if (nToSign > 150 || nToEx > 150)
-		throw Form::GradeTooLowException();
-	else if (nToSign < 1 || nToEx < 1)
-		throw Form::GradeTooHighException();
-}
-
-/*
- * Form full constructor
- */
-Form::Form(std::string s, int nToSign, int nToEx): name(s), isSigned(false), toSign(nToSign), toEx(nToEx)
-{
-	std::cout << PINK << "Form constructor called for " << this->getName()
+	std::cout << PINK << "AForm constructor called for " << this->getName()
 			<< " with sign grade " << this->getToSign() << " and exec grade of "
 			<< this->getToEx() << RST << std::endl;
 	if (nToSign > 150 || nToEx > 150)
-		throw Form::GradeTooLowException();
+		throw AForm::GradeTooLowException();
 	else if (nToSign < 1 || nToEx < 1)
-		throw Form::GradeTooHighException();
+		throw AForm::GradeTooHighException();
 }
 
 /*
- * Form copy constructor
+ * AForm full constructor
  */
-Form::Form(const Form &copy): name(copy.getName() + "_copy"), isSigned(false),
+AForm::AForm(std::string s, int nToSign, int nToEx): name(s), isSigned(false), toSign(nToSign), toEx(nToEx)
+{
+	std::cout << PINK << "AForm constructor called for " << this->getName()
+			<< " with sign grade " << this->getToSign() << " and exec grade of "
+			<< this->getToEx() << RST << std::endl;
+	if (nToSign > 150 || nToEx > 150)
+		throw AForm::GradeTooLowException();
+	else if (nToSign < 1 || nToEx < 1)
+		throw AForm::GradeTooHighException();
+}
+
+/*
+ * AForm copy constructor
+ */
+AForm::AForm(const AForm &copy): name(copy.getName() + "_copy"), isSigned(false),
 	toSign(copy.getToSign()), toEx(copy.getToEx())
 {
-	std::cout << PINK << "Form copy constructor called" << RST << std::endl;
+	std::cout << PINK << "AForm copy constructor called" << RST << std::endl;
 }
 
 /*
  * Assignation operator overload
  */
-Form& Form::operator=(const Form &src)
+AForm& AForm::operator=(const AForm &src)
 {
-	std::cout << PINK << "Form assignation operator overload called" << RST << std::endl;
+	std::cout << PINK << "AForm assignation operator overload called" << RST << std::endl;
 	if (this == &src)
 		return (*this);
 	return (*this);
@@ -88,22 +88,22 @@ Form& Form::operator=(const Form &src)
 /*							GETTERS && SETTERS	   						  */
 /**************************************************************************/
 
-const std::string Form::getName(void) const
+const std::string AForm::getName(void) const
 {
 	return (this->name);
 }
 
-bool Form::getSignStatus(void) const
+bool AForm::getSignStatus(void) const
 {
 	return (this->isSigned);
 }
 
-int Form::getToSign(void) const
+int AForm::getToSign(void) const
 {
 	return (this->toSign);
 }
 
-int Form::getToEx(void) const
+int AForm::getToEx(void) const
 {
 	return (this->toEx);
 }
@@ -115,7 +115,7 @@ int Form::getToEx(void) const
 /*
  * Signs the form if the Bureaucrat's grade is high enough
  */
-void Form::beSigned(const Bureaucrat &b)
+void AForm::beSigned(const Bureaucrat &b)
 {
 	std::cout << "Bureaucrat " << b.getName() << " trying to sign form "
 			<< this->getName() << std::endl;
@@ -124,10 +124,10 @@ void Form::beSigned(const Bureaucrat &b)
 	else if (!this->getSignStatus())
 	{
 		this->isSigned = true;
-		std::cout << this->getName() << " Form was signed by " << b.getName() << std::endl;
+		std::cout << this->getName() << " form was signed by " << b.getName() << std::endl;
 	}
 	else
-		std::cout << REDD << this->getName() << " Form is already signed" << RST << std::endl;
+		std::cout << REDD << this->getName() << " form is already signed" << RST << std::endl;
 }
 
 /**************************************************************************/
@@ -137,7 +137,7 @@ void Form::beSigned(const Bureaucrat &b)
 /*
  * grade above 150
  */
-const char *Form::GradeTooLowException::what(void) const throw()
+const char *AForm::GradeTooLowException::what(void) const throw()
 {
 	return ("Grade too low");
 }
@@ -145,9 +145,17 @@ const char *Form::GradeTooLowException::what(void) const throw()
 /*
  * grade below 1
  */
-const char *Form::GradeTooHighException::what(void) const throw()
+const char *AForm::GradeTooHighException::what(void) const throw()
 {
 	return ("Grade too high");
+}
+
+/*
+ * if form isn't signed
+ */
+const char *AForm::FormNotSignedException::what(void) const throw()
+{
+	return ("Form needs to be signed before executing");
 }
 
 /**************************************************************************/
@@ -155,7 +163,7 @@ const char *Form::GradeTooHighException::what(void) const throw()
 /*
  * Ostream overload
  */
-std::ostream &operator<<(std::ostream &o, Form *f)
+std::ostream &operator<<(std::ostream &o, AForm *f)
 {
 	o << GRNN << "Form: " << f->getName()
 			<< ":\n\tsign grade:\t" << f->getToSign()
