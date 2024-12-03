@@ -4,8 +4,7 @@
 #include <string>
 #include "Data.hpp"
 #include <iostream>
-
-class Data;
+#include <stdint.h>
 
 class Serializer
 {
@@ -16,6 +15,6 @@ class Serializer
 			~Serializer();
 
 	public:
-			uintptr_t	serialize(Data *ptr);
-			Data		*deserialize(uintptr_t raw);
+			static uintptr_t	serialize(Data *ptr);
+			static Data			*deserialize(uintptr_t raw);
 };

@@ -1,4 +1,4 @@
-NAME = convert
+NAME = serialize
 
 CC = c++
 FLAGS = -Wall -Wextra -Werror -std=c++98 -MMD -g3
@@ -6,7 +6,7 @@ INCLUDES = -I inc/
 
 SRCS_DIR = src/
 FUNC =	main.cpp			\
-		ScalarConverter.cpp
+		Serializer.cpp
 
 
 

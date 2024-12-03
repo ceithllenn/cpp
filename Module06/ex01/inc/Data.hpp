@@ -4,9 +4,8 @@
 #include <string>
 #include <iostream>
 
-class Data
+typedef struct Data
 {
-	public:
-
-	private:
-};
+	std::string	str;
+	int			n;
+}				Data;
