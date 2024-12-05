@@ -5,6 +5,7 @@
 #include "C.hpp"
 #include <string>
 #include <iostream>
+#include <stdlib.h>
 
 /*
  * Randomly instanciates A, B or C
@@ -46,7 +47,7 @@ void identify(Base &p)
 		(void)dynamic_cast<A&>(p);
 		std::cout << LIME "- A -" RST << std::endl;
 	}
-	catch (const std::bad_cast &e)
+	catch (const std::exception &e)
 	{
 		std::cout << REDD << "NOT A" << std::endl;
 	}
@@ -56,7 +57,7 @@ void identify(Base &p)
 		(void)dynamic_cast<B&>(p);
 		std::cout << LIME << "- B -" RST << std::endl;
 	}
-	catch (const std::bad_cast &e)
+	catch (const std::exception &e)
 	{
 		std::cout << REDD << "NOT B" << std::endl;
 	}
@@ -66,7 +67,7 @@ void identify(Base &p)
 		(void)dynamic_cast<C&>(p);
 		std::cout << LIME << "- C -" RST << std::endl;
 	}
-	catch (const std::bad_cast &e) 
+	catch (const std::exception &e) 
 	{
 		std::cout << REDD << "NOT C" << std::endl;
 	}
@@ -74,8 +75,6 @@ void identify(Base &p)
 
 int main(void)
 {
-	std::cout << CLRALL;
-
 	srand(static_cast<unsigned int>(time(0)));
 
 	Base* instances[10];
