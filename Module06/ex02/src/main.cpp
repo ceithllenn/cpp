@@ -87,7 +87,7 @@ int main(void)
 		identify(instances[i]);
 	std::cout << std::endl;
 
-	std::cout << GRY1 << "Identifiy reference:" << RST << std::endl;
+	std::cout << GRY1 << "Identify reference:" << RST << std::endl;
 	for (int i = 0; i < 10; ++i)
 	{
 		identify(*instances[i]);
