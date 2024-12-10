@@ -16,11 +16,14 @@ class PmergeMe
 			std::vector<int>	data_vector;
 			std::list<int>		data_list;
 			clock_t				start;
-			clock_t				v;
-	//		clock_t				l;
+			clock_t				timeV;
+			clock_t				timeL;
 
-			void	mergeVectors(std::vector<int> max);
-	//		void	mergeLists(std::list<int> max);
+			std::list<int>		sortSequenceList(std::list<int> &l);
+			std::vector<int>	sortSequenceVector(std::vector<int> &v);
+			std::vector<int>	mergeVectors(std::vector<int> max, std::vector<int> v);
+			std::list<int>		mergeLists(std::list<int> max, std::list<int> l);
+			void				printSequence(bool flag) const;
 
 	public:
 			PmergeMe();
@@ -31,9 +34,6 @@ class PmergeMe
 
 			void	sortSequence();
 			void	addNumber(int n);
-			void	printSequence(bool flag) const;
-			void	sortSequenceVector();
-		//	void	sortSequenceList();
 
 			class DuplicateUnauthorizedException: public std::exception
 			{

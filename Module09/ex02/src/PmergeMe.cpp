@@ -70,92 +70,19 @@ void PmergeMe::addNumber(int n)
 }
 
 /**
- * @brief prints the number's sequence
+ * @brief Main fonction of the PmergeMe class
  * 
+ * sorts the number sequence using both vector and list containers
+ * prints results and timestamps
  */
-void PmergeMe::printSequence(bool flag) const
-{
-	if (flag)
-		std::cout << "\nBefore: ";
-	else
-		std::cout << "\nAfter: ";
-	for (size_t i = 0; i < data_vector.size() && (int)i < 10; i++)
-		std::cout << data_vector[i] << " ";
-	if (data_vector.size() > 10)
-		std::cout << "[...]";
-	std::cout << std::endl;
-	if (!flag)
-	{
-    	double elapsed_time = static_cast<double>((v - start) / 10);
-		
-		std::cout << "\nTime to process a range of " << data_vector.size()
-				<< " elements with std::vector: " << elapsed_time << "ms." << std::endl;
-	}
-}
-
-/**
- * @brief sort the number sequence using the vectors container
- * 
- */
-void PmergeMe::sortSequenceVector(void)
-{
-	std::vector<int>	min;
-	std::vector<int>	max;
-
-	while (data_vector.size() > 1)
-	{
-		if (data_vector[data_vector.size() - 1] >= data_vector[data_vector.size() - 2])
-		{
-			max.push_back(data_vector[data_vector.size() - 1]);
-			min.push_back(data_vector[data_vector.size() - 2]);
-		}
-		else
-		{
-			min.push_back(data_vector[data_vector.size() - 1]);
-			max.push_back(data_vector[data_vector.size() - 2]);
-		}
-		data_vector.pop_back();
-		data_vector.pop_back();
-	}
-	if (data_vector.size())
-	{
-		max.push_back(data_vector[0]);
-		min.push_back(-1);
-		data_vector.pop_back();
-	}
-
-	/*********** @debug **********/
-	// std::cout << OLIV << std::endl;
-	// std::cout << "********Making pairs*********" << std::endl;
-	// for (size_t i = 0; i < max.size(); i++)
-	// 	std::cout << max[i] << "\t";
-	// std::cout << std::endl;
-	// for (size_t i = 0; i < min.size(); i++)
-	// 	std::cout << min[i] << "\t";
-	// std::cout << std::endl << std::endl;
-
-	std::sort(max.begin(), max.end());
-	std::sort(min.begin(), min.end());
-
-	/*************@debug **********/
-	// std::cout << PURP << "********Sorting sublists*****" << std::endl;
-	// for (size_t i = 0; i < max.size(); i++)
-	// 	std::cout << max[i] << "\t";
-	// std::cout << std::endl;
-	// for (size_t i = 0; i < min.size(); i++)
-	// 	std::cout << min[i] << "\t";
-	// std::cout << RST << std::endl << std::endl;
-
-	data_vector = min;
-	mergeVectors(max);
-	v = std::clock();
-}
-
 void PmergeMe::sortSequence(void)
 {
 	printSequence(1);
 	start = std::clock();
-	sortSequenceVector();
+	data_vector = sortSequenceVector(data_vector);
+	timeV = std::clock();
+	data_list = sortSequenceList(data_list);
+	timeL = std::clock();
 	printSequence(0);
 }
 
@@ -163,68 +90,289 @@ void PmergeMe::sortSequence(void)
 /*							PRIVATE METHODS					   			  */
 /**************************************************************************/
 
-// int *ft_jacobsthal(int n)
-// {
-// 	int	*tab = new int[n];
-
-// 	for (int i = 0; i < n; i++)
-// 	{
-// 		if (i == 0)
-// 			tab[i] = 0;
-// 		else if (i == 1)
-// 			tab[i] = 1;
-// 		else
-// 			tab[i] = tab[i - 1] + 2 * tab[i - 2];
-// 	}
-// 	return (tab);
-// }
-
-void PmergeMe::mergeVectors(std::vector<int> max)
+/**
+ * @brief sort the number sequence using the vectors container
+ * 
+ */
+std::vector<int> PmergeMe::sortSequenceVector(std::vector<int> &v)
 {
-	int	len = static_cast<int>(max.size());
-	int	nb = 0;
-	int	tmp = 0;
-	std::vector<int> jacob;
-	std::vector<int>::iterator	it = data_vector.begin();
+	std::vector<int>	min;
+	std::vector<int>	max;
+
+/*Divides the sequences into pairs
+Biggest number in all pairs goes into max vector
+Shortest into min*/
+
+	while (v.size() > 1)
+	{
+		if (v[v.size() - 1] >= v[v.size() - 2])
+		{
+			max.push_back(v[v.size() - 1]);
+			min.push_back(v[v.size() - 2]);
+		}
+		else
+		{
+			min.push_back(v[v.size() - 1]);
+			max.push_back(v[v.size() - 2]);
+		}
+		v.pop_back();
+		v.pop_back();
+	}
+	if (v.size())
+	{
+		max.push_back(v[0]);
+		v.pop_back();
+	}
+
+/*Sorts the sub-sequences, using the sortSequenceVector function
+recursively until we treat only two elements vectors which can easily
+be swapped if not sorted*/
+
+	if (max.size() > 2)
+	{
+		max = sortSequenceVector(max);
+		min = sortSequenceVector(min);
+	}
+	else
+	{
+		if (max[0] > max[1])
+			std::swap(max[0], max[1]);
+		if (min.size() > 1 && min[0] > min[1])
+			std::swap(min[0], min[1]);
+	}
+
+/*Both sub-sequences are merged in the v vector, returned by the function*/
+	v = min;
+	v = mergeVectors(max, v);
+	
+	return (v);
+}
+
+/**
+ * @brief sort the number sequence using the lists container
+ * 
+ */
+std::list<int> PmergeMe::sortSequenceList(std::list<int> &l)
+{
+	std::list<int>				min;
+	std::list<int>				max;
+	std::list<int>::iterator	i = l.end(); i--;
+	std::list<int>::iterator	j = i; j--;
+
+/*Divides the sequences into pairs
+Biggest number in all pairs goes into max list
+Shortest into min*/
+
+	while (l.size() > 1)
+	{
+		if (*i >= *j)
+		{
+			max.push_back(*i);
+			min.push_back(*j);
+		}
+		else
+		{
+			min.push_back(*j);
+			max.push_back(*i);
+		}
+		l.pop_back();
+		l.pop_back();
+		i = l.end(); i--;
+		j = i; j--;
+	}
+	if (!l.empty())
+	{
+		max.push_back(l.front());
+		l.pop_front();
+	}
+
+/*Sorts the sub-sequences, using the sortSequenceLists function
+recursively until we treat only two elements lists which can easily
+be swapped if not sorted*/
+
+	if (max.size() > 2)
+	{
+		max = sortSequenceList(max);
+		min = sortSequenceList(min);
+	}
+	else
+	{
+		std::list<int>::iterator	tmp = max.begin();
+		tmp++;
+		if (*max.begin() > *tmp)
+			std::iter_swap(max.begin(), tmp);
+		tmp = min.begin();
+		tmp++;
+		if (tmp != min.end() && *min.begin() > *tmp)
+			std::iter_swap(min.begin(), tmp);
+	}
+
+/*Both sub-sequences are merged in the l list, returned by the function*/
+	l = min;
+	l = mergeLists(max, l);
+
+	return (l);
+}
+
+/**
+ * @brief merges both sub-sequences into a single sorted vector
+ * using Ford-Johnson algorithm and Jacobsthal suite
+ */
+std::vector<int> PmergeMe::mergeVectors(std::vector<int> max, std::vector<int> v)
+{
+	int							len = static_cast<int>(max.size());
+	int							nb = 0;
+	int							tmp = 0;
+	std::vector<int>			jacob;
+	std::vector<int>::iterator	it = v.begin();
 
 	for (int i = 0; i < len; i++)
 	{
+
+/*We calculate each number of the jacobsthal suite until it becomes bigger
+than the size of max vector and use it to select the index of the first numbers
+we are going to push back into v*/
+
 		if (i == 0)
 			tmp = 0;
 		else if (i == 1)
 			tmp = 1;
-		else if (i == 2)
-			continue ;
 		else
+		{
 			tmp = jacob[i - 1] + 2 * jacob[i - 2];
-		if (tmp > len)
-			break ;
+			if (tmp >= len)
+				break ;
+		}
 		jacob.push_back(tmp);
-		nb = max[jacob[i]];
-		max[jacob[i]] = -1;
-		while (it != data_vector.end() && *it < nb)
-			it++;
-		data_vector.insert(it, nb);
+		if (tmp == 1 && i == 2)
+			continue ;
+		tmp = jacob[i];
+
+/*Once we've selected the number we needed, we insert it where it belongs
+in the v vector*/
+
+		if (max[tmp] != -1)
+		{
+			nb = max[tmp];
+			max[tmp] = -1;
+			while (it != v.end() && *it < nb)
+				it++;
+			if (it == v.end())
+				v.push_back(nb), it = v.begin();
+			else
+				it = v.insert(it, nb);
+		}
 	}
 
-	it = data_vector.begin();
+/* Then we proceed to inserting into v the numbers left in max*/
+	it = v.begin();
 	for (int i = 0; i < len; i++)
 	{
 		if (max[i] != -1)
 		{
 			nb = max[i];
-			while (it != data_vector.end() && *it < nb)
+			while (it != v.end() && *it < nb)
 				it++;
-			data_vector.insert(it, nb);
+			if (it == v.end())
+				v.push_back(nb), it = v.begin();
+			else
+				it = v.insert(it, nb);
 		}
 	}
 
-	/*************@debug **********/
-	// std::cout << BLUE << "\n********Merging lists*****" << std::endl;
-	// for (size_t i = 0; i < data_vector.size(); i++)
-	// 	std::cout << data_vector[i] << "\t";
-	// std::cout << std::endl;
-	// std::cout << RST << std::endl << std::endl;
+	return (v);
+}
+
+std::list<int> PmergeMe::mergeLists(std::list<int> max, std::list<int> l)
+{
+	int							len = static_cast<int>(max.size());
+	int							nb = 0;
+	int							tmp = 0;
+	int							jacob[14] = {0, 1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731, 5461};
+	std::list<int>::iterator	it = l.begin();
+	std::list<int>::iterator	it2;
+
+
+/*We follow the jacobsthal suite until it becomes bigger
+than the size of max list and use it to select the index of the first numbers
+we are going to push back into l*/
+	for (int i = 0; i < len; i++)
+	{
+		tmp = jacob[i];
+		if (tmp >= len)
+			break ;
+		it2 = max.begin();
+		for (int j = 0; j < tmp && it2 != max.end(); j++)
+			it2++;
+		nb = *it2;
+		*it2 = -1;
+
+/*Once we've selected the number we needed, we insert it where it belongs
+in the l list*/
+
+		if (nb != -1)
+		{
+			while (it != l.end() && *it < nb)
+				it++;
+			if (it == l.end())
+				l.push_back(nb), it = l.begin();
+			else
+				it = l.insert(it, nb);
+		}
+	}
+
+/* Then we proceed to inserting into l the numbers left in max*/
+	it = l.begin();
+	it2 = max.begin();
+	for (int i = 0; i < len; i++)
+	{
+		nb = *it2;
+		if (nb != -1)
+		{
+			while (it != l.end() && *it < nb)
+				it++;
+			if (it == l.end())
+				l.push_back(nb), it = l.begin();
+			else
+				it = l.insert(it, nb);
+		}
+		it2++;
+		if (it2 == l.end())
+			break ;
+	}
+
+	return (l);
+}
+
+/**
+ * @brief prints the number's sequence
+ * 
+ */
+void PmergeMe::printSequence(bool flag) const
+{
+	if (flag)
+		std::cout << "Before: ";
+	else
+		std::cout << "After: ";
+	for (size_t i = 0; i < data_vector.size() && (int)i < 20; i++)
+		std::cout << data_vector[i] << " ";
+	//for (std::list<int>::const_iterator it = data_list.begin(); it != data_list.end(); it++)
+	//	std::cout << " " << *it;
+	if (data_vector.size() > 20)
+		std::cout << "[...]";
+	std::cout << std::endl;
+	if (!flag)
+	{
+    	double timerVector = static_cast<double>((timeV - start) * 1000 / CLOCKS_PER_SEC);
+		
+		std::cout << "\nTime to process a range of " << data_vector.size()
+				<< " elements with std::vector: " << timerVector << "ms." << std::endl;
+
+		double timerList = static_cast<double>((timeL - timeV) * 1000 / CLOCKS_PER_SEC);
+		
+		std::cout << "Time to process a range of " << data_list.size()
+				<< " elements with std::list: " << timerList << "ms." << std::endl;
+	}
 }
 
 /**************************************************************************/
