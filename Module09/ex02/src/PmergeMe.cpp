@@ -102,7 +102,6 @@ std::vector<int> PmergeMe::sortSequenceVector(std::vector<int> &v)
 /*Divides the sequences into pairs
 Biggest number in all pairs goes into max vector
 Shortest into min*/
-
 	while (v.size() > 1)
 	{
 		if (v[v.size() - 1] >= v[v.size() - 2])
@@ -136,9 +135,9 @@ be swapped if not sorted*/
 	else
 	{
 		if (max[0] > max[1])
-			std::swap(max[0], max[1]);
+			max.swap(max);
 		if (min.size() > 1 && min[0] > min[1])
-			std::swap(min[0], min[1]);
+			min.swap(min);
 	}
 
 /*Both sub-sequences are merged in the v vector, returned by the function*/
@@ -200,11 +199,11 @@ be swapped if not sorted*/
 		std::list<int>::iterator	tmp = max.begin();
 		tmp++;
 		if (*max.begin() > *tmp)
-			std::iter_swap(max.begin(), tmp);
+			max.swap(max);
 		tmp = min.begin();
 		tmp++;
 		if (tmp != min.end() && *min.begin() > *tmp)
-			std::iter_swap(min.begin(), tmp);
+			min.swap(min);
 	}
 
 /*Both sub-sequences are merged in the l list, returned by the function*/
@@ -320,7 +319,6 @@ in the l list*/
 				it = l.insert(it, nb);
 		}
 	}
-
 /* Then we proceed to inserting into l the numbers left in max*/
 	it = l.begin();
 	it2 = max.begin();
@@ -356,22 +354,22 @@ void PmergeMe::printSequence(bool flag) const
 		std::cout << "After: ";
 	for (size_t i = 0; i < data_vector.size() && (int)i < 20; i++)
 		std::cout << data_vector[i] << " ";
-	//for (std::list<int>::const_iterator it = data_list.begin(); it != data_list.end(); it++)
-	//	std::cout << " " << *it;
+	// for (std::list<int>::const_iterator it = data_list.begin(); it != data_list.end(); it++)
+	// 	std::cout << " " << *it;
 	if (data_vector.size() > 20)
 		std::cout << "[...]";
 	std::cout << std::endl;
 	if (!flag)
 	{
-    	double timerVector = static_cast<double>((timeV - start) * 1000 / CLOCKS_PER_SEC);
+    	double timerVector = static_cast<double>((timeV - start) * 10000 / CLOCKS_PER_SEC);
 		
 		std::cout << "\nTime to process a range of " << data_vector.size()
-				<< " elements with std::vector: " << timerVector << "ms." << std::endl;
+				<< " elements with std::vector: " << timerVector << "µs." << std::endl;
 
-		double timerList = static_cast<double>((timeL - timeV) * 1000 / CLOCKS_PER_SEC);
+		double timerList = static_cast<double>((timeL - timeV) * 10000 / CLOCKS_PER_SEC);
 		
 		std::cout << "Time to process a range of " << data_list.size()
-				<< " elements with std::list: " << timerList << "ms." << std::endl;
+				<< " elements with std::list: " << timerList << "µs." << std::endl;
 	}
 }
 

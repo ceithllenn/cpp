@@ -16,7 +16,7 @@ if ! [[ "$N" =~ ^[0-9]+$ ]] || [ "$N" -le 0 ]; then
 fi
 
 # Génère une liste de N entiers aléatoires
-random_list=$(shuf -i 1-10000 -n "$N" | tr '\n' ' ')
+random_list=$(shuf -i 1-100000 -n "$N" | tr '\n' ' ')
 
 # Exécute le programme ./PmergeMe avec cette liste
 if [ -x "./PmergeMe" ]; then
